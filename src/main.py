@@ -9,4 +9,4 @@ app.register_blueprint(order, url_prefix = "/api/order")
 app.register_blueprint(complement, url_prefix = "/api/complement")
 
 if __name__ == "__main__":
-	app.run(debug=True)
+	app.run(debug=True, port=8000)

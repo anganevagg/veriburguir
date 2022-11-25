@@ -1,6 +1,6 @@
-from src.database.base import Base
+from config import db
 from sqlalchemy import *
 
-class Burger(Base):
+class Burger(db.Model):
 	id = Column(Integer, primary_key=True)
 	name = Column(String(50), nullable = False)
