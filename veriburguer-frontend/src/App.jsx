@@ -1,15 +1,16 @@
 import { useState } from 'react'
 import 'bootstrap/dist/css/bootstrap.css'
 import { NavBar } from './components/NavBar'
-import  Carrusel  from  './components/Carrousel'
+import { Landing } from './views/Landing'
+import { Orders } from './views/Orders'
 
 function App() {
-  return (
-    <div className="App">
+	return (
+		<div className="App">
 			<NavBar></NavBar>
-     <Carrusel></Carrusel>
-    </div>
-  )
+			<Landing></Landing>
+		</div>
+	)
 }
 
 export default App

@@ -3,7 +3,7 @@ import image1 from "../assets/background.jpg"
 import image2 from "../assets/burguir2.jpg"
 import image3 from "../assets/burguir3.jpg"
 
-function Carrusel() {
+export function Carrusel() {
   return (
     <Carousel>
       <Carousel.Item>
@@ -46,5 +46,3 @@ function Carrusel() {
     </Carousel>
   );
 }
-
-export default Carrusel;
