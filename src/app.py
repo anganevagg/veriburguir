@@ -1,8 +1,7 @@
 
 from routes.root import root
 from routes.api.order import order
-from routes.api.complement import complement
-from routes.api.burger import burger
+from routes.api.item import item
 
 from flask import Flask
 from database import db
@@ -20,8 +19,7 @@ Migrate(app, db)
 
 app.register_blueprint(root, url_prefix = "/")
 app.register_blueprint(order, url_prefix = "/api/orders")
-app.register_blueprint(complement, url_prefix = "/api/complements")
-app.register_blueprint(burger, url_prefix = "/api/burgers")
+app.register_blueprint(item, url_prefix = "/api/items")
 
 
 if __name__ == "__main__":

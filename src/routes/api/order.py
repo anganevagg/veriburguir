@@ -1,6 +1,7 @@
 from flask import request, Blueprint
-from database.models.order import Order, OrderSchema
+from database import Order, OrderSchema
 from database import db
+from database import Item
 
 order = Blueprint("orders", __name__, static_folder="templates")
 
@@ -9,6 +10,9 @@ order_validator = OrderSchema()
 @order.get('/')
 def getAll():
 	result = Order.query.all()
+	for res in result:
+		for item in res.items:
+			print(item)
 	return {
 		"data": OrderSchema(many=True).dump(result)
 	}
@@ -26,12 +30,17 @@ def getOne(id: int):
 
 @order.post('/')
 def create():
-	burguers = request.json.get('burguers')
-	# complements = request.json.get('complements')
-
-	if burguers is None:
-		burguers=[]
-	if complements is None:
-		complements = []
-	order = Order(burguers = burguers, complements = complements)
+	items = request.json.get('items')
+	order = Order()
+	for item in items:
+		order.items.append(Item.query.get({"id": item}))
+		sum = 0
+		for found_item in order.items:
+			sum = sum + found_item.price
+			found_item.selled = found_item.selled + 1
+		order.total = sum
 	db.session.add(order)
+	db.session.commit()
+	return {
+		"message": "created"
+	}
