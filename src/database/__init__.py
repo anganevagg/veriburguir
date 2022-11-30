@@ -5,6 +5,7 @@ from sqlalchemy import *
 from marshmallow_sqlalchemy import SQLAlchemyAutoSchema
 from sqlalchemy.orm import backref
 import marshmallow
+from marshmallow_sqlalchemy.fields import Nested
 
 db = SQLAlchemy()
 
@@ -27,17 +28,18 @@ class Order(db.Model):
 	# client_id = Column(Integer, ForeignKey('client.id'))
 	items = db.relationship("Item", secondary = OrderItem)
 
+class ItemSchema(SQLAlchemyAutoSchema):
+	class Meta:
+		model = Item
+		include_fk = True
+		load_instance = True
+		include_relationships = True
+	
+
 class OrderSchema(SQLAlchemyAutoSchema):
 	class Meta:
 		model = Order
 		include_fk = True
 		load_instance = True
 		include_relationships = True
-
-
-
-class ItemSchema(SQLAlchemyAutoSchema):
-	class Meta:
-		model = Item
-		include_fk = True
-		load_instance = True
+	items = Nested(ItemSchema, many=True)

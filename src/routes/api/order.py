@@ -1,7 +1,7 @@
 from flask import request, Blueprint
 from database import Order, OrderSchema
 from database import db
-from database import Item
+from database import Item, ItemSchema
 
 order = Blueprint("orders", __name__, static_folder="templates")
 
@@ -10,13 +10,10 @@ order_validator = OrderSchema()
 @order.get('/')
 def getAll():
 	result = Order.query.all()
-	for res in result:
-		for item in res.items:
-			print(item)
+	print(OrderSchema(many=True).dump(result))
 	return {
 		"data": OrderSchema(many=True).dump(result)
 	}
-
 @order.get('/<int:id>')
 def getOne(id: int):
 	result = Order.query.get({"id": id})
